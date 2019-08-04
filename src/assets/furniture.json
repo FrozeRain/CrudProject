@@ -1,0 +1,30 @@
+[
+  {
+    "furniture": [
+      {
+        "name": "Sofa",
+        "material": "Letter, Oak Wood"
+      },
+      {
+        "name": "Bed",
+        "material": "Pine Wood"
+      },
+      {
+        "name": "Table",
+        "material": "Metal, Wood"
+      },
+      {
+        "name": "Cupboard",
+        "material": "Plywood, Glass"
+      },
+      {
+        "name": "Commode",
+        "material": "Birch Wood, Metal"
+      },
+      {
+        "name": "Table",
+        "material": "Wood, Glass"
+      }
+    ]
+  }
+]

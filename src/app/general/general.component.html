@@ -1,0 +1,56 @@
+<div class="jasmine-alert">
+  <h1>
+    Crud operations
+  </h1>
+  <form (submit)="addNewFurniture(nam.value, mat.value)">
+    <div class="form-group">
+      <input type="text" id="addName" placeholder="Enter Name" required="true" #nam>
+      <input type="text" id="addMat" placeholder="Enter Material" required="true" #mat>
+      <button type="submit">Add new Furniture</button>
+    </div>
+  </form>
+
+  <div style="color: brown; background-color: aliceblue">
+    {{warn}}
+  </div><br>
+
+  <form *ngIf="isEdit" (submit)="updateForm()">
+    <div>
+      <input type="text" [(ngModel)]="name" name="name"/>
+      <input type="text" [(ngModel)]="material" name="material"/>
+      <button type="submit">Update</button>
+    </div>
+  </form>
+  <table>
+  <th>Name</th>
+  <th>Material</th>
+    <th>     </th>
+    <th>     </th>
+  <tr *ngFor="let furn of furniture">
+    <td>{{furn.name}}</td>
+    <td>{{furn.material}}</td>
+    <td>
+      <button type="button" style="
+      background-color: brown;
+      border-color: maroon;
+      height: 40px;
+      width: 40px;
+      margin-top: 15px;
+      margin-right: 15px"
+              (click)="deleteFurn(furn)">X</button>
+    </td>
+    <td>
+      <button type="button" style="
+      background-color: cornflowerblue;
+      border-color: blue;
+      height: 40px;
+      width: 60px;
+      margin-top: 15px;
+      margin-right: 15px"
+      (click)="editFurn(furn)">Edit</button>
+    </td>
+  </tr>
+  </table>
+</div>
+
+
