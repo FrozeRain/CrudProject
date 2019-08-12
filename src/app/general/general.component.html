@@ -2,10 +2,11 @@
   <h1>
     Crud operations
   </h1>
-  <form (submit)="addNewFurniture(nam.value, mat.value)">
+  <form (submit)="addNewFurniture(nam.value, mat.value, desc.value)">
     <div class="form-group">
       <input type="text" id="addName" placeholder="Enter Name" required="true" #nam>
       <input type="text" id="addMat" placeholder="Enter Material" required="true" #mat>
+      <input type="text" id="addDesc" placeholder="Enter Description" #desc>
       <button type="submit">Add new Furniture</button>
     </div>
   </form>
@@ -18,17 +19,22 @@
     <div>
       <input type="text" [(ngModel)]="name" name="name"/>
       <input type="text" [(ngModel)]="material" name="material"/>
+      <input type="text" [(ngModel)]="describe" name="describe"/>
       <button type="submit">Update</button>
     </div>
   </form>
   <table>
-  <th>Name</th>
-  <th>Material</th>
+  <th style="width: 30px">Id</th>
+  <th style="width: 20%">Name</th>
+  <th style="width: 25%">Material</th>
+    <th style="width: 30%">Description</th>
     <th>     </th>
     <th>     </th>
-  <tr *ngFor="let furn of furniture">
+  <tr *ngFor="let furn of getFurniture()">
+    <td>{{furn.id}}</td>
     <td>{{furn.name}}</td>
     <td>{{furn.material}}</td>
+    <td>{{furn.description}}</td>
     <td>
       <button type="button" style="
       background-color: brown;
@@ -37,7 +43,7 @@
       width: 40px;
       margin-top: 15px;
       margin-right: 15px"
-              (click)="deleteFurn(furn)">X</button>
+              (click)="deleteFurn(furn.id)">X</button>
     </td>
     <td>
       <button type="button" style="
@@ -47,7 +53,7 @@
       width: 60px;
       margin-top: 15px;
       margin-right: 15px"
-      (click)="editFurn(furn)">Edit</button>
+      (click)="editFurn(furn.id)">Edit</button>
     </td>
   </tr>
   </table>

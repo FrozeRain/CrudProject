@@ -1,11 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-type': 'application/json'
-  })
-};
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Furniture} from "../class/Furniture";
 
 @Component({
   selector: 'app-general',
@@ -14,72 +9,89 @@ const httpOptions = {
 })
 export class GeneralComponent implements OnInit {
 
-  constructor(private http: HttpClient) {}
-
-  furniture = [];
-  newFurniture: object = {};
+  private furniture: Furniture[];
+  private nextId: number;
   warn: string;
   name: string = "";
   material: string = "";
-  pos: number;
+  describe: string = "";
+  index: number;
   isEdit: boolean = false;
 
 
-  addNewFurniture (nam, mat){
-    if (nam.toString() != "" && mat.toString() != "") {
+  constructor(private http: HttpClient) {
+    let furniture = this.getFurniture();
+
+    if (furniture.length == 0) {
+      this.nextId = 0;
+    } else {
+      let maxId = furniture[furniture.length - 1].id;
+      this.nextId = maxId + 1;
+    }
+  }
+
+  setStorage(furniture: Furniture[]): void {
+    localStorage.setItem('furniture', JSON.stringify({furniture: furniture}));
+  }
+
+  addNewFurniture(nam: string, mat: string, desc: string) {
+    let furn = new Furniture(this.nextId, nam, mat, desc);
+    if (nam != "" && mat != "") {
       this.warn = "";
-      this.newFurniture = {
-        "name": nam,
-        "material": mat
-      };
-      this.furniture.push(this.newFurniture);
-      //this.http.post('./assets/furniture.json', this.newFurniture, httpOptions).toPromise()
-      //  .then(data => {
-      //    console.log(data)
-      //  })
+      let furniture = this.getFurniture();
+      furniture.push(furn);
+      this.setStorage(furniture);
+      this.nextId++;
     } else {
       this.warn = "FILL OUT ALL FORMS!"
     }
   };
 
-  deleteFurn (furn){
-    for (let i = 0; i < this.furniture.length; i++){
-      if (this.furniture[i] == furn){
-        this.furniture.splice(i, 1);
-        break;
-      }
-    }
+  deleteFurn(id: number): void {
+    let furniture = this.getFurniture();
+    furniture = furniture.filter((furn) => furn.id != id);
+    this.setStorage(furniture);
   }
 
-  editFurn (furn){
+  editFurn(id: number) {
     this.isEdit = !this.isEdit;
-    for (let i = 0; i < this.furniture.length; i++){
-      if (this.furniture[i] == furn){
-        this.name = this.furniture[i].name;
-        this.material = this.furniture[i].material;
-        this.pos = i;
+    let furniture = this.getFurniture();
+    for (let i = 0; i < furniture.length; i++) {
+      if (furniture[i].id == id) {
+        this.name = furniture[i].name;
+        this.material = furniture[i].material;
+        this.describe = furniture[i].description;
+        this.index = i;
       }
     }
     console.log(this.name + this.material);
   }
 
-  updateForm (){
+  updateForm() {
     this.isEdit = !this.isEdit;
-    this.furniture[this.pos].name = this.name;
-    this.furniture[this.pos].material = this.material;
+    let furniture = this.getFurniture();
+    furniture[this.index].name = this.name;
+    furniture[this.index].material = this.material;
+    furniture[this.index].description = this.describe;
+    this.setStorage(furniture);
     console.log(this.name);
   }
 
+  public getFurniture(): Furniture[] {
+    let localStorageItem = JSON.parse(localStorage.getItem('furniture'));
+    return localStorageItem == null ? [] : localStorageItem.furniture;
+  }
+
+  public deafultFurn() {
+    this.http.get('../../assets/furniture.json').subscribe(data => {
+      let result: Furniture[] = JSON.parse(JSON.stringify(data)).furniture;
+      this.setStorage(result.concat(this.getFurniture()));
+    });
+  }
+
   ngOnInit() {
-    this.http.get('./assets/furniture.json').subscribe(
-      data => {
-        let res = data[0];
-        this.furniture = res['furniture'];
-      },
-      (err: HttpErrorResponse) => {
-        console.log(err.message);
-      }
-    );
+    //this.deafultFurn();
+    this.getFurniture();
   }
 
 }

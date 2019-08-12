@@ -1,30 +1,40 @@
-[
-  {
-    "furniture": [
-      {
-        "name": "Sofa",
-        "material": "Letter, Oak Wood"
-      },
-      {
-        "name": "Bed",
-        "material": "Pine Wood"
-      },
-      {
-        "name": "Table",
-        "material": "Metal, Wood"
-      },
-      {
-        "name": "Cupboard",
-        "material": "Plywood, Glass"
-      },
-      {
-        "name": "Commode",
-        "material": "Birch Wood, Metal"
-      },
-      {
-        "name": "Table",
-        "material": "Wood, Glass"
-      }
-    ]
-  }
-]
+{
+  "furniture": [
+    {
+      "id" : 0,
+      "name": "Sofa",
+      "material": "Letter, Oak Wood",
+      "description": "soft and clean"
+    },
+    {
+      "id" : 1,
+      "name": "Bed",
+      "material": "Pine Wood",
+      "description": "soft and clean"
+    },
+    {
+      "id" : 2,
+      "name": "Table",
+      "material": "Metal, Wood",
+      "description": "soft and clean"
+    },
+    {
+      "id" : 3,
+      "name": "Cupboard",
+      "material": "Plywood, Glass",
+      "description": "soft and clean"
+    },
+    {
+      "id" : 4,
+      "name": "Commode",
+      "material": "Birch Wood, Metal",
+      "description": "soft and clean"
+    },
+    {
+      "id" : 5,
+      "name": "Table",
+      "material": "Wood, Glass",
+      "description": "soft and clean"
+    }
+  ]
+}
